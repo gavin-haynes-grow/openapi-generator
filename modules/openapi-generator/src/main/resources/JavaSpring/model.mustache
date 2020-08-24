@@ -28,6 +28,10 @@ import javax.xml.bind.annotation.*;
 import org.springframework.hateoas.RepresentationModel;
 {{/hateoas}}
 {{/parent}}
+{{#isLombokModel}}
+import lombok.*;
+import lombok.experimental.*;
+{{/isLombokModel}}
 
 {{#models}}
 {{#model}}

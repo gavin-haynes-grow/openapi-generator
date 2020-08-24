@@ -3,18 +3,16 @@
 */{{#description}}
     @ApiModel(description = "{{{description}}}"){{/description}}
 {{#isLombokModel}}
-@AllArgsConstructor
-@EqualsAndHashCode
-@ToString
-@Getter
-{{#parent}}
+@Getter{{#parent}}
 @SuperBuilder
-{{/parent}}
-{{^parent}}
+{{/parent}}{{^parent}}
 @Builder
 {{/parent}}
-{{/isLombokModel}}
-{{>generatedAnnotation}}{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{>xmlAnnotation}}{{>additionalModelTypeAnnotations}}
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+{{/isLombokModel}}{{>generatedAnnotation}}{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{>xmlAnnotation}}{{>additionalModelTypeAnnotations}}
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}}{{^parent}}{{#hateoas}}extends RepresentationModel<{{classname}}> {{/hateoas}}{{/parent}} {{#serializableModel}}implements Serializable{{/serializableModel}} {
 {{#serializableModel}}
     private static final long serialVersionUID = 1L;
@@ -46,10 +44,10 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}}{{^parent}}
     {{/isLombokModel}}
     {{#isContainer}}
     {{#useBeanValidation}}@Valid{{/useBeanValidation}}
-    private {{>nullableDataType}} {{name}} = {{#isNullable}}JsonNullable.undefined(){{/isNullable}}{{^isNullable}}{{#required}}{{{defaultValue}}}{{/required}}{{^required}}null{{/required}}{{/isNullable}};
+    {{>nullableDataType}} {{name}} = {{#isNullable}}JsonNullable.undefined(){{/isNullable}}{{^isNullable}}{{#required}}{{{defaultValue}}}{{/required}}{{^required}}null{{/required}}{{/isNullable}};
     {{/isContainer}}
     {{^isContainer}}
-    private {{>nullableDataType}} {{name}}{{#isNullable}} = JsonNullable.undefined(){{/isNullable}}{{^isNullable}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/isNullable}};
+    {{>nullableDataType}} {{name}}{{#isNullable}} = JsonNullable.undefined(){{/isNullable}}{{^isNullable}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/isNullable}};
     {{/isContainer}}
 
 {{/vars}}
